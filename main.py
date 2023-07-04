@@ -55,7 +55,30 @@ coinX3 = random.randint(200,350)
 coinY1 = 0
 coinY2 = 50
 coinY3 = 100
-score = 0
+
+#score board
+sb = 0
+scoreFont = pygame.font.Font(None,35)
+def score(sb):
+    s = scoreFont.render("Score: "+str(sb),True,white)
+    SCREEN.blit(s,(396,10))
+
+#life 
+lifeImg = "image/heart.png"
+lifeX = [0,30,60]
+lifeY = 10
+lifeNo = 3
+countl = 0
+def life(i,x,y):
+    SCREEN.blit(pygame.image.load(lifeImg),(x,y))
+
+#enemy player
+enemyImg = pygame.image.load("image/car2.png")
+enemyX1 = random.randint(120,290)
+enemyY1 = -50
+enemyX2 = random.randint(120,290)
+enemyY2 = 50
+
 #game loop
 while not GAME_OVER:
     if not START_GAME :
@@ -114,10 +137,10 @@ while not GAME_OVER:
                         coinY1 = 0
                         coinX1 = random.randint(120,350)
                     #collision
-                    if coinX1>playerX and coinX1<playerX+128 and coinY1>playerY and coinY1<playerY+128:
+                    if coinX1>playerX-20 and coinX1<playerX+108 and coinY1>playerY-20 and coinY1<playerY+108:
                         coinY1 = 0
                         coinX1 = random.randint(120,350)
-                        score = score + 1
+                        sb = sb  + 1
                     #coin 2
                     if coinY2 >=50 and coinY2<=700:
                         coinY2 = coinY2+3
@@ -126,10 +149,10 @@ while not GAME_OVER:
                         coinY2 = 50
                         coinX2 = random.randint(180,350)
                     #collision
-                    if coinX2>playerX and coinX2<playerX+128 and coinY2>playerY and coinY2<playerY+128:
+                    if coinX2>playerX-20 and coinX2<playerX+108 and coinY2>playerY-20 and coinY2<playerY+108:
                         coinY2 = 0
                         coinX2 = random.randint(180,350)
-                        score = score + 1
+                        sb = sb  + 1
                     #coin 3
                     if coinY3 >=100 and coinY3<=700:
                         coinY3 = coinY3+3
@@ -138,10 +161,32 @@ while not GAME_OVER:
                         coinY3 = 100   
                         coinX3 = random.randint(200,350)
                     #collision
-                    if coinX3>playerX and coinX3<playerX+128 and coinY3>playerY and coinY3<playerY+128:
+                    if coinX3>playerX-20 and coinX3<playerX+108 and coinY3>playerY-20 and coinY3<playerY+108:
                         coinY3 = 0
                         coinX3 = random.randint(200,350)
-                        score = score + 1
+                        sb = sb  + 1
+                    score(sb)
+
+                    #enemy player
+                    if enemyY1 >= -50 and enemyY1<=700:
+                        enemyY1 = enemyY1+3
+                        SCREEN.blit(enemyImg,(enemyX1,enemyY1))
+                    else:
+                        enemyY1 = -50  
+                        enemyX1 = random.randint(120,290)
+                    #collision
+                    if enemyX1>=playerX-70 and enemyX1<=playerX+70 and enemyY1>=playerY-70 and enemyY1<playerY+70:
+                        enemyY1 = 0
+                        enemyX1 = random.randint(120,290)
+                        lifeNo -= 1
+                        #when 3 lifes are dead then game over, reset everything
+                        if lifeNo == 0:
+                            START_GAME =False
+                            sb = 0
+                            lifeNo = 3
+                    for i in range (lifeNo):
+                        life(i,lifeX[i],lifeY)
+                    
                 #when the 1st lane is equal to the secont lane y axis, iterate the lane movement
                 if LaneY == 120:
                     LaneY = 0
@@ -157,4 +202,3 @@ while not GAME_OVER:
                     playerX = 270
                 player(playerX,playerY)
     pygame.display.update()
-print(score)
