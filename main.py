@@ -138,7 +138,7 @@ while not GAME_OVER:
                         coinX1 = random.randint(120,350)
                     #collision
                     if coinX1>playerX-20 and coinX1<playerX+108 and coinY1>playerY-20 and coinY1<playerY+108:
-                        coinY1 = 0
+                        coinY1 = -50 
                         coinX1 = random.randint(120,350)
                         sb = sb  + 1
                     #coin 2
@@ -150,7 +150,7 @@ while not GAME_OVER:
                         coinX2 = random.randint(180,350)
                     #collision
                     if coinX2>playerX-20 and coinX2<playerX+108 and coinY2>playerY-20 and coinY2<playerY+108:
-                        coinY2 = 0
+                        coinY2 = -50 
                         coinX2 = random.randint(180,350)
                         sb = sb  + 1
                     #coin 3
@@ -162,7 +162,7 @@ while not GAME_OVER:
                         coinX3 = random.randint(200,350)
                     #collision
                     if coinX3>playerX-20 and coinX3<playerX+108 and coinY3>playerY-20 and coinY3<playerY+108:
-                        coinY3 = 0
+                        coinY3 = -50 
                         coinX3 = random.randint(200,350)
                         sb = sb  + 1
                     score(sb)
