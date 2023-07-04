@@ -48,19 +48,14 @@ def player(x,y):
     SCREEN.blit(playerImg,(x,y))
 
 #coin
-coinImgs = []
-coinX1 = []
-coinX2 = []
-coinX3 = []
+coinImg = pygame.image.load("image/coin.png")
+coinX1 = random.randint(120,350)
+coinX2 = random.randint(180,350)
+coinX3 = random.randint(200,350)
 coinY1 = 0
 coinY2 = 50
 coinY3 = 100
-for i in range(2):
-    coinImgs.append(pygame.image.load("image/coin.png"))
-    coinX1.append(random.randint(120,340))
-    coinX2.append(random.randint(120,340))
-    coinX3.append(random.randint(120,340))
-
+score = 0
 #game loop
 while not GAME_OVER:
     if not START_GAME :
@@ -111,25 +106,42 @@ while not GAME_OVER:
                     LaneY += LaneY_change
                     Lane(LaneY)
                     #coin generating part
+                    #coin 1
                     if coinY1 >=0 and coinY1<=700:
                         coinY1 = coinY1+3
-                        for i in range (2):
-                            SCREEN.blit(coinImgs[i],(coinX1[i],coinY1))
+                        SCREEN.blit(coinImg,(coinX1,coinY1))
                     else:
                         coinY1 = 0
+                        coinX1 = random.randint(120,350)
+                    #collision
+                    if coinX1>playerX and coinX1<playerX+128 and coinY1>playerY and coinY1<playerY+128:
+                        coinY1 = 0
+                        coinX1 = random.randint(120,350)
+                        score = score + 1
+                    #coin 2
                     if coinY2 >=50 and coinY2<=700:
                         coinY2 = coinY2+3
-                        for i in range (2):
-                            SCREEN.blit(coinImgs[i],(coinX2[i],coinY2))
+                        coinImg,(coinX2,coinY2)
                     else:
                         coinY2 = 50
+                        coinX2 = random.randint(180,350)
+                    #collision
+                    if coinX2>playerX and coinX2<playerX+128 and coinY2>playerY and coinY2<playerY+128:
+                        coinY2 = 0
+                        coinX2 = random.randint(180,350)
+                        score = score + 1
+                    #coin 3
                     if coinY3 >=100 and coinY3<=700:
                         coinY3 = coinY3+3
-                        for i in range (2):
-                            SCREEN.blit(coinImgs[i],(coinX3[i],coinY3))
+                        SCREEN.blit(coinImg,(coinX3,coinY3))
                     else:
-                        coinY3 = 100
-                    
+                        coinY3 = 100   
+                        coinX3 = random.randint(200,350)
+                    #collision
+                    if coinX3>playerX and coinX3<playerX+128 and coinY3>playerY and coinY3<playerY+128:
+                        coinY3 = 0
+                        coinX3 = random.randint(200,350)
+                        score = score + 1
                 #when the 1st lane is equal to the secont lane y axis, iterate the lane movement
                 if LaneY == 120:
                     LaneY = 0
@@ -145,3 +157,4 @@ while not GAME_OVER:
                     playerX = 270
                 player(playerX,playerY)
     pygame.display.update()
+print(score)
