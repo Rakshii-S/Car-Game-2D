@@ -60,6 +60,7 @@ coinY3 = 100
 cAudio = mixer.Sound("audio/coin.wav")
 
 #score board
+global sb 
 sb = 0
 scoreFont = pygame.font.Font(None,30)
 def score(sb):
@@ -70,8 +71,10 @@ hsb = data.read()
 def highscore(hsb,sb):
     if sb >int(hsb):
         data = open("highScore.txt","w")
-        hsb = data.write(str(sb))
-        s = scoreFont.render("High Score: "+str(sb),True,white)
+        data.write(str(sb))
+        data = open("highScore.txt","r")
+        hsb = data.read()
+        s = scoreFont.render("High Score: "+str(hsb),True,white)
         SCREEN.blit(s,(5,50))
     else:
         s = scoreFont.render("High Score: "+str(hsb),True,white)
@@ -80,7 +83,7 @@ def highscore(hsb,sb):
 #life 
 lifeImg = "image/heart.png"
 lifeX = [410,440,470]
-lifeY = 10
+lifeY = 10 
 lifeNo = 3
 countl = 0
 def life(i,x,y):
@@ -89,16 +92,17 @@ def life(i,x,y):
 #enemy player
 enemyImg = pygame.image.load("image/car2.png")
 enemyX1 = random.randint(120,290)
-enemyY1 = -50
+enemyY1 = -200
 enemyX2 = random.randint(120,290)
 enemyY2 = 50
 eAudio = mixer.Sound("audio/crash.wav")
 
 #end ui
-
+end = False
+endImg = pygame.image.load("image/gameover.png")
 #game loop
 while not GAME_OVER:
-    if not START_GAME :
+    if not START_GAME and end == False:
         mixer.music.play(-1) 
         SCREEN.blit(BG,(0,0))
         SCREEN.blit(ROAD,(100,0))
@@ -185,29 +189,23 @@ while not GAME_OVER:
                         coinY3 = -50 
                         coinX3 = random.randint(200,350)
                         sb = sb  + 1
+                    for i in range (lifeNo):
+                        life(i,lifeX[i],lifeY)
                     score(sb)
                     highscore(hsb,sb)
                     #enemy player
-                    if enemyY1 >= -50 and enemyY1<=700:
+                    if enemyY1 >= -200 and enemyY1<=700:
                         enemyY1 = enemyY1+4
                         SCREEN.blit(enemyImg,(enemyX1,enemyY1))
                     else:
-                        enemyY1 = -50  
+                        enemyY1 = -200  
                         enemyX1 = random.randint(120,290)
                     #collision
                     if enemyX1>=playerX-70 and enemyX1<=playerX+70 and enemyY1>=playerY-70 and enemyY1<playerY+70:
                         eAudio.play()
-                        enemyY1 = 0
+                        enemyY1 = -200
                         enemyX1 = random.randint(120,290)
                         lifeNo -= 1
-                        #when 3 lifes are dead then game over, reset everything
-                        if lifeNo == 0:
-                            START_GAME =False
-                            sb = 0
-                            lifeNo = 3
-                    for i in range (lifeNo):
-                        life(i,lifeX[i],lifeY)
-                    
                 #when the 1st lane is equal to the secont lane y axis, iterate the lane movement
                 if LaneY == 120:
                     LaneY = 0
@@ -222,4 +220,18 @@ while not GAME_OVER:
                 if playerX >=270:
                     playerX = 270
                 player(playerX,playerY)
+                #when 3 lifes are dead then game over, reset everything
+                if lifeNo == 0:
+                    end = True
+                    if end:
+                        SCREEN.blit(BG,(0,0))
+                        SCREEN.blit(ROAD,(100,0))
+                        SCREEN.blit(endImg,(0,0))
+                        data = open("highScore.txt","r")
+                        hsb = data.read()
+                        sb = 0
+                        lifeNo = 3
+                        playerX = 190
+                        playerY = 570
+                        START_GAME = False
     pygame.display.update()
