@@ -1,5 +1,6 @@
 import pygame 
 import random
+from pygame import mixer
 pygame.init()
 
 #colors
@@ -14,6 +15,7 @@ pygame.display.set_icon(LOGO)
 #background
 BG = pygame.image.load("image/bg.png")
 ROAD = pygame.image.load("image/road.png")
+mixer.music.load("audio/bg.mp3")
 
 #game specific variables
 GAME_OVER = False
@@ -55,6 +57,7 @@ coinX3 = random.randint(200,350)
 coinY1 = 0
 coinY2 = 50
 coinY3 = 100
+cAudio = mixer.Sound("audio/coin.wav")
 
 #score board
 sb = 0
@@ -89,14 +92,17 @@ enemyX1 = random.randint(120,290)
 enemyY1 = -50
 enemyX2 = random.randint(120,290)
 enemyY2 = 50
+eAudio = mixer.Sound("audio/crash.wav")
+
+#end ui
 
 #game loop
 while not GAME_OVER:
     if not START_GAME :
+        mixer.music.play(-1) 
         SCREEN.blit(BG,(0,0))
         SCREEN.blit(ROAD,(100,0))
         SCREEN.blit(START,(0,0))
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             GAME_OVER =True
@@ -106,9 +112,9 @@ while not GAME_OVER:
             if event.key == pygame.K_UP:
                 playerY_change = 3
             if event.key == pygame.K_RIGHT:
-                playerX_change = 2
+                playerX_change = 3
             if event.key == pygame.K_LEFT:
-                playerX_change = -2
+                playerX_change = -3
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 playerX_change = 0
@@ -136,43 +142,46 @@ while not GAME_OVER:
                     Lane(LaneY)
                 #when the player y axis greater than 570 start the lane movement 
                 else:
-                    LaneY_change = 5
+                    LaneY_change = 6
                     LaneY += LaneY_change
                     Lane(LaneY)
                     #coin generating part
                     #coin 1
                     if coinY1 >=0 and coinY1<=700:
-                        coinY1 = coinY1+3
+                        coinY1 = coinY1+4
                         SCREEN.blit(coinImg,(coinX1,coinY1))
                     else:
                         coinY1 = 0
                         coinX1 = random.randint(120,350)
                     #collision
-                    if coinX1>playerX-20 and coinX1<playerX+108 and coinY1>playerY-20 and coinY1<playerY+108:
+                    if coinX1>playerX-10 and coinX1<playerX+88 and coinY1>playerY-10 and coinY1<playerY+88:
+                        cAudio.play()
                         coinY1 = -50 
                         coinX1 = random.randint(120,350)
                         sb = sb  + 1
                     #coin 2
                     if coinY2 >=50 and coinY2<=700:
-                        coinY2 = coinY2+3
-                        coinImg,(coinX2,coinY2)
+                        coinY2 = coinY2+4
+                        SCREEN.blit(coinImg,(coinX2,coinY2))
                     else:
                         coinY2 = 50
                         coinX2 = random.randint(180,350)
                     #collision
-                    if coinX2>playerX-20 and coinX2<playerX+108 and coinY2>playerY-20 and coinY2<playerY+108:
+                    if coinX2>playerX-10 and coinX2<playerX+88 and coinY2>playerY-10 and coinY2<playerY+88:
+                        cAudio.play()
                         coinY2 = -50 
                         coinX2 = random.randint(180,350)
                         sb = sb  + 1
                     #coin 3
                     if coinY3 >=100 and coinY3<=700:
-                        coinY3 = coinY3+3
+                        coinY3 = coinY3+4
                         SCREEN.blit(coinImg,(coinX3,coinY3))
                     else:
                         coinY3 = 100   
                         coinX3 = random.randint(200,350)
                     #collision
-                    if coinX3>playerX-20 and coinX3<playerX+108 and coinY3>playerY-20 and coinY3<playerY+108:
+                    if coinX3>playerX-10 and coinX3<playerX+88 and coinY3>playerY-10 and coinY3<playerY+88:
+                        cAudio.play()
                         coinY3 = -50 
                         coinX3 = random.randint(200,350)
                         sb = sb  + 1
@@ -180,13 +189,14 @@ while not GAME_OVER:
                     highscore(hsb,sb)
                     #enemy player
                     if enemyY1 >= -50 and enemyY1<=700:
-                        enemyY1 = enemyY1+3
+                        enemyY1 = enemyY1+4
                         SCREEN.blit(enemyImg,(enemyX1,enemyY1))
                     else:
                         enemyY1 = -50  
                         enemyX1 = random.randint(120,290)
                     #collision
                     if enemyX1>=playerX-70 and enemyX1<=playerX+70 and enemyY1>=playerY-70 and enemyY1<playerY+70:
+                        eAudio.play()
                         enemyY1 = 0
                         enemyX1 = random.randint(120,290)
                         lifeNo -= 1
