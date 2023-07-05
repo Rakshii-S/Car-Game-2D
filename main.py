@@ -58,14 +58,25 @@ coinY3 = 100
 
 #score board
 sb = 0
-scoreFont = pygame.font.Font(None,35)
+scoreFont = pygame.font.Font(None,30)
 def score(sb):
     s = scoreFont.render("Score: "+str(sb),True,white)
-    SCREEN.blit(s,(396,10))
+    SCREEN.blit(s,(5,10))
+data = open("highScore.txt","r")
+hsb = data.read()
+def highscore(hsb,sb):
+    if sb >int(hsb):
+        data = open("highScore.txt","w")
+        hsb = data.write(str(sb))
+        s = scoreFont.render("High Score: "+str(sb),True,white)
+        SCREEN.blit(s,(5,50))
+    else:
+        s = scoreFont.render("High Score: "+str(hsb),True,white)
+        SCREEN.blit(s,(5,50))
 
 #life 
 lifeImg = "image/heart.png"
-lifeX = [0,30,60]
+lifeX = [410,440,470]
 lifeY = 10
 lifeNo = 3
 countl = 0
@@ -166,7 +177,7 @@ while not GAME_OVER:
                         coinX3 = random.randint(200,350)
                         sb = sb  + 1
                     score(sb)
-
+                    highscore(hsb,sb)
                     #enemy player
                     if enemyY1 >= -50 and enemyY1<=700:
                         enemyY1 = enemyY1+3
