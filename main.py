@@ -103,7 +103,6 @@ end = False
 endImg = pygame.image.load("image/gameover.png")
 
 #game pause
-PFont = pygame.font.Font(None,25)
 pause = False
 pauseImg = pygame.image.load("image/pause.png")
 # game play
@@ -219,20 +218,9 @@ while not GAME_OVER:
                     #pause and play image display
                     if pause == True:
                         SCREEN.blit(pauseImg,(440,50))
-                        pauseT1 = PFont.render(" Press",True,black)
-                        pauseT2 = PFont.render(" Right Shift",True,black)
-                        pauseT3 = PFont.render(" to play",True,black)
-                        SCREEN.blit(pauseT1,(405,100))
-                        SCREEN.blit(pauseT2,(405,120))
-                        SCREEN.blit(pauseT3,(405,140))
                     else:
                         SCREEN.blit(playImg,(440,50))
-                        playT1 = PFont.render(" Press",True,black)
-                        playT2 = PFont.render(" Left Shift",True,black)
-                        playT3 = PFont.render(" to pause",True,black)
-                        SCREEN.blit(playT1,(405,100))
-                        SCREEN.blit(playT2,(405,120))
-                        SCREEN.blit(playT3,(405,140))
+            
                     #enemy player
                     if pause == True:
                         SCREEN.blit(enemyImg,(enemyX1,enemyY1))
