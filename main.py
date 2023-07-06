@@ -5,6 +5,7 @@ pygame.init()
 
 #colors
 white = (255,255,255)
+black = (0,0,0)
 
 #game window, caption, logo
 SCREEN = pygame.display.set_mode((500,700))
@@ -64,7 +65,7 @@ global sb
 sb = 0
 scoreFont = pygame.font.Font(None,30)
 def score(sb):
-    s = scoreFont.render("Score: "+str(sb),True,white)
+    s = scoreFont.render("Score: "+str(sb),True,black)
     SCREEN.blit(s,(5,10))
 data = open("highScore.txt","r")
 hsb = data.read()
@@ -74,10 +75,10 @@ def highscore(hsb,sb):
         data.write(str(sb))
         data = open("highScore.txt","r")
         hsb = data.read()
-        s = scoreFont.render("High Score: "+str(hsb),True,white)
+        s = scoreFont.render("High Score: "+str(hsb),True,black)
         SCREEN.blit(s,(5,50))
     else:
-        s = scoreFont.render("High Score: "+str(hsb),True,white)
+        s = scoreFont.render("High Score: "+str(hsb),True,black)
         SCREEN.blit(s,(5,50))
 
 #life 
@@ -100,6 +101,13 @@ eAudio = mixer.Sound("audio/crash.wav")
 #end ui
 end = False
 endImg = pygame.image.load("image/gameover.png")
+
+#game pause
+PFont = pygame.font.Font(None,25)
+pause = False
+pauseImg = pygame.image.load("image/pause.png")
+# game play
+playImg = pygame.image.load("image/play.png")
 #game loop
 while not GAME_OVER:
     if not START_GAME and end == False:
@@ -119,9 +127,14 @@ while not GAME_OVER:
                 playerX_change = 3
             if event.key == pygame.K_LEFT:
                 playerX_change = -3
+            if event.key == pygame.K_LSHIFT :
+                pause = True
+            if event.key == pygame.K_RSHIFT:
+                pause = False
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 playerX_change = 0
+            
                     
     if START_GAME:
         if COUNT:
@@ -142,16 +155,21 @@ while not GAME_OVER:
                 SCREEN.blit(BG,(0,0))
                 SCREEN.blit(ROAD,(100,0))
                 #when the player y axis is equal to 570 do not start the lane movement 
-                if playerY == 570:
+                if playerY == 570 and pause ==False:
                     Lane(LaneY)
                 #when the player y axis greater than 570 start the lane movement 
                 else:
-                    LaneY_change = 6
-                    LaneY += LaneY_change
-                    Lane(LaneY)
+                    if pause == True:
+                        Lane(LaneY)
+                    else:
+                        LaneY_change = 6
+                        LaneY += LaneY_change
+                        Lane(LaneY)
                     #coin generating part
                     #coin 1
-                    if coinY1 >=0 and coinY1<=700:
+                    if pause == True:
+                        SCREEN.blit(coinImg,(coinX1,coinY1))
+                    elif coinY1 >=0 and coinY1<=700:
                         coinY1 = coinY1+4
                         SCREEN.blit(coinImg,(coinX1,coinY1))
                     else:
@@ -164,7 +182,9 @@ while not GAME_OVER:
                         coinX1 = random.randint(120,350)
                         sb = sb  + 1
                     #coin 2
-                    if coinY2 >=50 and coinY2<=700:
+                    if pause ==True:
+                        SCREEN.blit(coinImg,(coinX2,coinY2))
+                    elif coinY2 >=50 and coinY2<=700:
                         coinY2 = coinY2+4
                         SCREEN.blit(coinImg,(coinX2,coinY2))
                     else:
@@ -177,7 +197,9 @@ while not GAME_OVER:
                         coinX2 = random.randint(180,350)
                         sb = sb  + 1
                     #coin 3
-                    if coinY3 >=100 and coinY3<=700:
+                    if pause == True:
+                        SCREEN.blit(coinImg,(coinX3,coinY3))
+                    elif coinY3 >=100 and coinY3<=700:
                         coinY3 = coinY3+4
                         SCREEN.blit(coinImg,(coinX3,coinY3))
                     else:
@@ -193,8 +215,28 @@ while not GAME_OVER:
                         life(i,lifeX[i],lifeY)
                     score(sb)
                     highscore(hsb,sb)
+
+                    #pause and play image display
+                    if pause == True:
+                        SCREEN.blit(pauseImg,(440,50))
+                        pauseT1 = PFont.render(" Press",True,black)
+                        pauseT2 = PFont.render(" Right Shift",True,black)
+                        pauseT3 = PFont.render(" to play",True,black)
+                        SCREEN.blit(pauseT1,(405,100))
+                        SCREEN.blit(pauseT2,(405,120))
+                        SCREEN.blit(pauseT3,(405,140))
+                    else:
+                        SCREEN.blit(playImg,(440,50))
+                        playT1 = PFont.render(" Press",True,black)
+                        playT2 = PFont.render(" Left Shift",True,black)
+                        playT3 = PFont.render(" to pause",True,black)
+                        SCREEN.blit(playT1,(405,100))
+                        SCREEN.blit(playT2,(405,120))
+                        SCREEN.blit(playT3,(405,140))
                     #enemy player
-                    if enemyY1 >= -200 and enemyY1<=700:
+                    if pause == True:
+                        SCREEN.blit(enemyImg,(enemyX1,enemyY1))
+                    elif enemyY1 >= -200 and enemyY1<=700:
                         enemyY1 = enemyY1+4
                         SCREEN.blit(enemyImg,(enemyX1,enemyY1))
                     else:
