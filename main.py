@@ -59,6 +59,7 @@ coinY1 = 0
 coinY2 = 50
 coinY3 = 100
 cAudio = mixer.Sound("audio/coin.wav")
+cAudio.set_volume(0.4)
 
 #score board
 global sb 
@@ -95,6 +96,7 @@ enemyImg = pygame.image.load("image/car2.png")
 enemyX1 = random.randint(120,290)
 enemyY1 = -200
 eAudio = mixer.Sound("audio/crash.wav")
+eAudio.set_volume(0.6)
 
 #end ui
 end = False
