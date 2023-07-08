@@ -94,8 +94,6 @@ def life(i,x,y):
 enemyImg = pygame.image.load("image/car2.png")
 enemyX1 = random.randint(120,290)
 enemyY1 = -200
-enemyX2 = random.randint(120,290)
-enemyY2 = 50
 eAudio = mixer.Sound("audio/crash.wav")
 
 #end ui
@@ -174,7 +172,7 @@ while not GAME_OVER:
                     else:
                         coinY1 = 0
                         coinX1 = random.randint(120,350)
-                    #collision
+                    #collision 1
                     if coinX1>playerX-10 and coinX1<playerX+88 and coinY1>playerY-10 and coinY1<playerY+88:
                         cAudio.play()
                         coinY1 = -50 
@@ -183,13 +181,13 @@ while not GAME_OVER:
                     #coin 2
                     if pause ==True:
                         SCREEN.blit(coinImg,(coinX2,coinY2))
-                    elif coinY2 >=50 and coinY2<=700:
+                    elif coinY2 >=50 and coinY2<=700 :
                         coinY2 = coinY2+4
                         SCREEN.blit(coinImg,(coinX2,coinY2))
                     else:
                         coinY2 = 50
                         coinX2 = random.randint(180,350)
-                    #collision
+                    #collision 2
                     if coinX2>playerX-10 and coinX2<playerX+88 and coinY2>playerY-10 and coinY2<playerY+88:
                         cAudio.play()
                         coinY2 = -50 
@@ -204,7 +202,7 @@ while not GAME_OVER:
                     else:
                         coinY3 = 100   
                         coinX3 = random.randint(200,350)
-                    #collision
+                    #collision 3
                     if coinX3>playerX-10 and coinX3<playerX+88 and coinY3>playerY-10 and coinY3<playerY+88:
                         cAudio.play()
                         coinY3 = -50 
