@@ -106,6 +106,7 @@ pauseImg = pygame.image.load("image/pause.png")
 playImg = pygame.image.load("image/play.png")
 #game loop
 while not GAME_OVER:
+    clock.tick(164)
     if not START_GAME and end == False:
         mixer.music.play(-1) 
         SCREEN.blit(BG,(0,0))
