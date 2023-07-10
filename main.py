@@ -106,7 +106,6 @@ pauseImg = pygame.image.load("image/pause.png")
 playImg = pygame.image.load("image/play.png")
 #game loop
 while not GAME_OVER:
-    clock.tick(164)
     if not START_GAME and end == False:
         mixer.music.play(-1) 
         SCREEN.blit(BG,(0,0))
@@ -149,6 +148,7 @@ while not GAME_OVER:
                 clock.tick(2)
                 count += 1
             else:
+                clock.tick(164)
                 SCREEN.blit(BG,(0,0))
                 SCREEN.blit(ROAD,(100,0))
                 #when the player y axis is equal to 570 do not start the lane movement 
@@ -166,6 +166,10 @@ while not GAME_OVER:
                     #coin 1
                     if pause == True:
                         SCREEN.blit(coinImg,(coinX1,coinY1))
+                    #coin should be not generated under the enemy car
+                    elif coinX1+100>=enemyX1 and coinX1<=enemyX1+138 and coinY1+100>=enemyY1 and coinY1<=enemyY1+138:
+                        coinY1 = -50
+                        coinX1 = random.randint(120,350)
                     elif coinY1 >=0 and coinY1<=700:
                         coinY1 = coinY1+4
                         SCREEN.blit(coinImg,(coinX1,coinY1))
@@ -181,6 +185,10 @@ while not GAME_OVER:
                     #coin 2
                     if pause ==True:
                         SCREEN.blit(coinImg,(coinX2,coinY2))
+                    #coin should be not generated under the enemy car
+                    elif coinX2+100>=enemyX1 and coinX2<=enemyX1+138 and coinY2+100>=enemyY1 and coinY2<=enemyY1+138:
+                        coinY2 = -50
+                        coinX2 = random.randint(120,350)
                     elif coinY2 >=50 and coinY2<=700 :
                         coinY2 = coinY2+4
                         SCREEN.blit(coinImg,(coinX2,coinY2))
@@ -196,6 +204,10 @@ while not GAME_OVER:
                     #coin 3
                     if pause == True:
                         SCREEN.blit(coinImg,(coinX3,coinY3))
+                    #coin should be not generated under the enemy car
+                    elif coinX3+100>=enemyX1 and coinX3<=enemyX1+138 and coinY3+100>=enemyY1 and coinY3<=enemyY1+138:
+                        coinY3 = -50
+                        coinX3 = random.randint(120,350)
                     elif coinY3 >=100 and coinY3<=700:
                         coinY3 = coinY3+4
                         SCREEN.blit(coinImg,(coinX3,coinY3))
