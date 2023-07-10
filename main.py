@@ -25,13 +25,10 @@ START_GAME = False
 #lane markings
 LaneY = 0
 LaneY_change = 0
+LaneY_add = [0,120,240,360,480,590]
 def Lane(LaneY):
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY,20,80))
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+120,20,80))
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+240,20,80))
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+360,20,80))
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+480,20,80))
-    pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+590,20,80))
+    for i in range(5):
+        pygame.draw.rect(SCREEN,white,pygame.Rect(240,LaneY+LaneY_add[i],20,80))
 
 #start ui
 START = pygame.image.load("image/start.png")
