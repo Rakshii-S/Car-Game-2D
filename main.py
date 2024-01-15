@@ -131,7 +131,6 @@ while not GAME_OVER:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 playerX_change = 0
             
-                    
     if START_GAME:
         if COUNT:
             clock.tick(2)
@@ -254,7 +253,8 @@ while not GAME_OVER:
                     playerY_change = 0
                 else:
                     playerY -= playerY_change
-                playerX +=playerX_change
+                if pause == False:
+                    playerX +=playerX_change
                 if playerX <=100:
                     playerX = 100
                 if playerX >=270:
