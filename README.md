@@ -13,15 +13,17 @@ Car Game 2D is a basic 2D game created using Python and the Pygame library, a to
 ## User Interface
 1. 
 
-![car game 1](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/cde2615f-86fd-43aa-bcfe-a97bd3c2b443)
+![car game 1](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/281e5380-b3b8-49b6-b4c2-404ca887bb21)
+
 
 2. 
 
-![car game 2](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/f66fb27e-7adc-4bb8-ae8b-b6b2ff60456d)
+
+![car game 2](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/31d15a1b-f707-4442-8960-c7228fcff7d6)
 
 3. 
 
-![car game 3](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/b8f47d37-c4b4-4539-baf1-388bb7ab4682)
+![car game 3](https://github.com/Rakshii-S/Car-Game-2D/assets/128218700/2806ddbc-88b3-4e8d-a019-91f9c32871a3)
 
 4. 
 
